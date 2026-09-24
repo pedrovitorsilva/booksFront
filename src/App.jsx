@@ -9,10 +9,9 @@ import Estante from './componentes/Estante';
 import Perfil from './componentes/Perfil';
 import Sacola from './componentes/Sacola';
 import Cadastro from './componentes/Cadastro';
-import Titulo from './componentes/Titulo';
-import Subtitulo from './componentes/Subtitulo';
-import { CHAVE_FAVORITOS, lerFavoritos } from './componentes/BotaoFavorito';
-import { catalogoLivros } from './componentes/Pesquisar/dadosPesquisa';
+import { catalogoLivros } from './dados/catalogoLivros';
+
+const CHAVE_FAVORITOS = 'booksia-favoritos';
 
 const categorias = [
   { id: 1, nome: 'Front-end' },
@@ -21,6 +20,14 @@ const categorias = [
   { id: 4, nome: 'UX/UI' },
   { id: 5, nome: 'Arquitetura' },
 ];
+
+function lerFavoritos() {
+  try {
+    return JSON.parse(localStorage.getItem(CHAVE_FAVORITOS)) || [];
+  } catch {
+    return [];
+  }
+}
 
 function App() {
   const [favoritos, setFavoritos] = useState(lerFavoritos);
@@ -40,24 +47,6 @@ function App() {
       return livroFavoritado
         ? favoritosAtuais.filter(({ id }) => id !== livro.id)
         : [...favoritosAtuais, livro];
-    });
-  }
-
-  function finalizarCompra(itens) {
-    setLivrosComprados((livrosAtuais) => {
-      return itens.reduce((lista, item) => {
-        const itemExistente = lista.find((livro) => livro.id === item.id);
-
-        if (itemExistente) {
-          return lista.map((livro) => (
-            livro.id === item.id
-              ? { ...livro, quantidade: (livro.quantidade || 0) + item.quantidade }
-              : livro
-          ));
-        }
-
-        return [...lista, { ...item, quantidade: item.quantidade || 1 }];
-      }, livrosAtuais);
     });
   }
 
@@ -82,30 +71,53 @@ function App() {
   }
 
   function concluirCompra() {
-    finalizarCompra(itensSacola);
+    setLivrosComprados((livrosAtuais) => (
+      itensSacola.reduce((lista, item) => {
+        const itemExistente = lista.find((livro) => livro.id === item.id);
+
+        if (itemExistente) {
+          return lista.map((livro) => (
+            livro.id === item.id
+              ? { ...livro, quantidade: (livro.quantidade || 0) + item.quantidade }
+              : livro
+          ));
+        }
+
+        return [...lista, { ...item, quantidade: item.quantidade || 1 }];
+      }, livrosAtuais)
+    ));
     setItensSacola([]);
   }
+
+  const propsLivros = {
+    favoritos,
+    itensSacola,
+    onAlternarFavorito: alternarFavorito,
+    onAdicionarSacola: alternarSacola,
+  };
 
   return (
     <div className='App'>
       <Header />
       <Routes>
-        <Route path='/' element={<Home favoritos={favoritos} alternarFavorito={alternarFavorito} itensSacola={itensSacola} onAdicionarSacola={alternarSacola} />} />
-        <Route path='/categorias' element={<Categoria categorias={categorias} livros={catalogoLivros} favoritos={favoritos} alternarFavorito={alternarFavorito} itensSacola={itensSacola} onAdicionarSacola={alternarSacola} />} />
-        <Route path='/favoritos' element={<Favoritos favoritos={favoritos} alternarFavorito={alternarFavorito} itensSacola={itensSacola} onAdicionarSacola={alternarSacola} />} />
+        <Route path='/' element={<Home {...propsLivros} />} />
+        <Route path='/categorias' element={<Categoria categorias={categorias} livros={catalogoLivros} {...propsLivros} />} />
+        <Route path='/favoritos' element={<Favoritos {...propsLivros} />} />
         <Route path='/minha-estante' element={<Estante livrosComprados={livrosComprados} />} />
         <Route path='/perfil' element={<Perfil quantidadeFavoritos={favoritos.length} />} />
+        <Route path='/cadastro' element={<Cadastro />} />
         <Route
-          path='/cadastro'
+          path='/sacola'
           element={(
-            <main className='pagina pagina-cadastro'>
-              <Titulo>Cadastro</Titulo>
-              <Subtitulo>Crie sua conta para continuar.</Subtitulo>
-              <Cadastro />
-            </main>
+            <Sacola
+              itensSacola={itensSacola}
+              onAdicionarSacola={alternarSacola}
+              onAtualizarQuantidade={atualizarQuantidadeSacola}
+              onRemoverDaSacola={removerDaSacola}
+              onFinalizarCompra={concluirCompra}
+            />
           )}
         />
-        <Route path='/sacola' element={<Sacola itensSacola={itensSacola} onAdicionarSacola={alternarSacola} onAtualizarQuantidade={atualizarQuantidadeSacola} onRemoverDaSacola={removerDaSacola} onFinalizarCompra={concluirCompra} />} />
       </Routes>
     </div>
   );

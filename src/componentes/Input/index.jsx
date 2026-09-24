@@ -1,20 +1,11 @@
 import './estilo.css';
 
-function Input({
-  type = 'text',
-  placeholder = 'Digite aqui',
-  className = '',
-  value,
-  onBlur,
-  ...props
-}) {
+function Input({ type = 'text', placeholder = 'Digite aqui', className = '', ...props }) {
   return (
     <input
       type={type}
       placeholder={placeholder}
       className={`input-padrao ${className}`.trim()}
-      value={value}
-      onBlur={onBlur}
       {...props}
     />
   );

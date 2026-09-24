@@ -1,41 +1,41 @@
 .ultimas-atualizacoes {
-	max-width: 920px;
-	margin: 40px auto;
-	padding: 0 24px 40px;
+  max-width: 920px;
+  margin: 40px auto;
+  padding: 0 24px 40px;
 }
 
 .ultimas-atualizacoes h2 {
-	margin-bottom: 24px;
-	color: #fff;
-	font-size: 28px;
+  margin-bottom: 24px;
+  color: #fff;
+  font-size: 28px;
 }
 
 .livros-atualizados {
-	display: grid;
-	grid-template-columns: repeat(3, minmax(220px, 260px));
-	justify-content: center;
-	gap: 20px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(220px, 260px));
+  justify-content: center;
+  gap: 20px;
 }
 
 .livros-atualizados .card-livro--atualizacao {
-	border: 1px solid transparent;
-	transition: transform var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
+  border: 1px solid transparent;
+  transition: transform var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
 }
 
 .livros-atualizados .card-livro--atualizacao:hover {
-	border-color: var(--accent-border);
-	box-shadow: 0 12px 24px rgb(0 47 82 / 18%);
-	transform: translateY(-4px);
+  border-color: var(--accent-border);
+  box-shadow: 0 12px 24px rgb(0 47 82 / 18%);
+  transform: translateY(-4px);
 }
 
 @media (max-width: 700px) {
-	.livros-atualizados {
-		grid-template-columns: repeat(2, minmax(160px, 220px));
-	}
+  .livros-atualizados {
+    grid-template-columns: repeat(2, minmax(160px, 220px));
+  }
 }
 
 @media (max-width: 480px) {
-	.livros-atualizados {
-		grid-template-columns: minmax(0, 280px);
-	}
+  .livros-atualizados {
+    grid-template-columns: minmax(0, 280px);
+  }
 }

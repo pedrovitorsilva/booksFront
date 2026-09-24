@@ -4,7 +4,7 @@ import IconesHeader from '../IconesHeader';
 
 function Header() {
   return (
-    <header className='App-header'>
+    <header className='cabecalho'>
       <Logo />
       <OpcoesHeader />
       <IconesHeader />

@@ -2,7 +2,19 @@ import BotaoFavorito from '../BotaoFavorito';
 import capaFallback from '../../assets/livro3.png';
 import './estilo.css';
 
-function CardLivro({ livro, modo = 'resultado', mostrarPreco = false, mostrarQuantidade = false, linkCapa = false, mostrarFavorito = true, mostrarSacola = true, adicionadoSacola = false, favoritado = false, onAlternarFavorito = () => {}, onAdicionarSacola = () => {} }) {
+function CardLivro({
+  livro,
+  modo = 'resultado',
+  mostrarPreco = false,
+  mostrarQuantidade = false,
+  linkCapa = false,
+  mostrarFavorito = true,
+  mostrarSacola = true,
+  adicionadoSacola = false,
+  favoritado = false,
+  onAlternarFavorito = () => {},
+  onAdicionarSacola = () => {},
+}) {
   function usarCapaFallback(evento) {
     evento.currentTarget.onerror = null;
     evento.currentTarget.src = capaFallback;
@@ -34,7 +46,11 @@ function CardLivro({ livro, modo = 'resultado', mostrarPreco = false, mostrarQua
             <BotaoFavorito livro={livro} favoritado={favoritado} onAlternar={onAlternarFavorito} />
           )}
           {mostrarSacola && (
-            <button className={`botao-sacola ${adicionadoSacola ? 'adicionado' : ''}`} type='button' onClick={() => onAdicionarSacola(livro)}>
+            <button
+              className={`botao-sacola ${adicionadoSacola ? 'adicionado' : ''}`}
+              type='button'
+              onClick={() => onAdicionarSacola(livro)}
+            >
               {adicionadoSacola ? 'Adicionado à sacola' : 'Adicionar à sacola'}
             </button>
           )}

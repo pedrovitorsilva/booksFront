@@ -1,7 +1,7 @@
 .subtitulo {
   width: min(100%, 1050px);
   margin: 0 auto 32px;
-  color: var(--subtitulo-cor, #dceaf1);
+  color: var(--subtitulo-cor, var(--text-on-dark));
   font-size: var(--subtitulo-tamanho, 16px);
   font-weight: 500;
   line-height: 1.5;

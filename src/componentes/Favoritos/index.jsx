@@ -1,59 +1,59 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Titulo from '../Titulo';
 import Subtitulo from '../Subtitulo';
 import Pesquisar from '../Pesquisar';
 import ListaLivros from '../ListaLivros';
 import './estilo.css';
 
-function Favoritos({ favoritos, alternarFavorito, itensSacola, onAdicionarSacola }) {
-    const [livrosExibidos, setLivrosExibidos] = useState(favoritos);
-    const [buscaKey, setBuscaKey] = useState(0);
+function Favoritos({ favoritos, itensSacola, onAlternarFavorito, onAdicionarSacola }) {
+  const [resultadosBusca, setResultadosBusca] = useState(null);
+  const [buscaKey, setBuscaKey] = useState(0);
+  const livrosExibidos = resultadosBusca ?? favoritos;
 
-    useEffect(() => {
-        setLivrosExibidos(favoritos);
-    }, [favoritos]);
+  function alternarFavorito(livro) {
+    setResultadosBusca(null);
+    onAlternarFavorito(livro);
+  }
 
-    return (
-        <main className='pagina pagina-favoritos'>
-            <Titulo>Favoritos</Titulo>
-            <Subtitulo>Livros que você guardou para ler depois.</Subtitulo>
-            <Pesquisar
-                key={buscaKey}
-                livros={favoritos}
-                favoritos={favoritos}
-                alternarFavorito={alternarFavorito}
-                placeholder='Buscar nos favoritos'
-                titulo='Buscar livros'
-                subtitulo='Encontre um livro entre seus favoritos.'
-                mostrarResultados={false}
-                onResultadosChange={setLivrosExibidos}
-            />
-            <button
-                className='botao-listar-todos'
-                type='button'
-                onClick={() => {
-                    setLivrosExibidos(favoritos);
-                    setBuscaKey((chaveAtual) => chaveAtual + 1);
-                }}
-            >
-                Listar todos
-            </button>
-            <section className='lista-favoritos' aria-label='Livros favoritados'>
-                {livrosExibidos.length === 0 ? (
-                    <p>Nenhum favorito corresponde à busca.</p>
-                ) : (
-                    <ListaLivros
-                        livros={livrosExibidos}
-                        favoritos={favoritos}
-                        itensSacola={itensSacola}
-                        mostrarSacola={false}
-                        onAlternarFavorito={alternarFavorito}
-                        onAdicionarSacola={onAdicionarSacola}
-                    />
-                )}
-            </section>
-        </main>
-    );
+  function listarTodos() {
+    setResultadosBusca(null);
+    setBuscaKey((chaveAtual) => chaveAtual + 1);
+  }
+
+  return (
+    <main className='pagina pagina-favoritos'>
+      <Titulo>Favoritos</Titulo>
+      <Subtitulo>Livros que você guardou para ler depois.</Subtitulo>
+      <Pesquisar
+        key={buscaKey}
+        livros={favoritos}
+        favoritos={favoritos}
+        onAlternarFavorito={alternarFavorito}
+        placeholder='Buscar nos favoritos'
+        titulo='Buscar livros'
+        subtitulo='Encontre um livro entre seus favoritos.'
+        mostrarResultados={false}
+        onResultadosChange={setResultadosBusca}
+      />
+      <button className='botao-listar-todos' type='button' onClick={listarTodos}>
+        Listar todos
+      </button>
+      <section className='lista-favoritos' aria-label='Livros favoritados'>
+        {livrosExibidos.length === 0 ? (
+          <p>Nenhum favorito corresponde à busca.</p>
+        ) : (
+          <ListaLivros
+            livros={livrosExibidos}
+            favoritos={favoritos}
+            itensSacola={itensSacola}
+            mostrarSacola={false}
+            onAlternarFavorito={alternarFavorito}
+            onAdicionarSacola={onAdicionarSacola}
+          />
+        )}
+      </section>
+    </main>
+  );
 }
 
 export default Favoritos;

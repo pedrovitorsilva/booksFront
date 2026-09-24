@@ -1,7 +1,7 @@
-import './estilo.css';
+import { Link } from 'react-router-dom';
 import perfil from '../../assets/perfil.svg';
 import sacola from '../../assets/sacola.svg';
-import { Link } from 'react-router-dom';
+import './estilo.css';
 
 function IconesHeader() {
   return (

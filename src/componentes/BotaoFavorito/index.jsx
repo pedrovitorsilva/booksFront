@@ -1,17 +1,6 @@
 import './estilo.css';
 
-const CHAVE_FAVORITOS = 'booksia-favoritos';
-
-function lerFavoritos() {
-  try {
-    return JSON.parse(localStorage.getItem(CHAVE_FAVORITOS)) || [];
-  } catch {
-    return [];
-  }
-}
-
 function BotaoFavorito({ livro, favoritado, onAlternar }) {
-
   return (
     <button
       className={`botao-favorito ${favoritado ? 'favoritado' : ''}`}
@@ -25,5 +14,4 @@ function BotaoFavorito({ livro, favoritado, onAlternar }) {
   );
 }
 
-export { CHAVE_FAVORITOS, lerFavoritos };
 export default BotaoFavorito;

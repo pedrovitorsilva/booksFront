@@ -4,12 +4,6 @@
   background: var(--page-gradient);
 }
 
-.estante-subtitulo {
-  margin: -12px 0 32px;
-  color: #52616b;
-  text-align: center;
-}
-
 .estante-contagem {
   width: fit-content;
   margin: -12px auto 24px;

@@ -1,23 +1,18 @@
 import { Link } from 'react-router-dom';
-import { catalogoLivros } from '../Pesquisar/dadosPesquisa';
+import { catalogoLivros } from '../../dados/catalogoLivros';
 import Titulo from '../Titulo';
 import Subtitulo from '../Subtitulo';
 import './estilo.css';
 
+function converterPreco(preco) {
+  return Number(preco.replace('R$ ', '').replace('.', '').replace(',', '.'));
+}
+
+function formatarPreco(valor) {
+  return valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+}
+
 function Sacola({ itensSacola, onAdicionarSacola, onAtualizarQuantidade, onRemoverDaSacola, onFinalizarCompra }) {
-
-  function finalizarCompra() {
-    onFinalizarCompra(itensSacola);
-  }
-
-  function converterPreco(preco) {
-    return Number(preco.replace('R$ ', '').replace('.', '').replace(',', '.'));
-  }
-
-  function formatarPreco(valor) {
-    return valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-  }
-
   const subtotal = itensSacola.reduce(
     (total, item) => total + converterPreco(item.preco) * item.quantidade,
     0
@@ -29,7 +24,7 @@ function Sacola({ itensSacola, onAdicionarSacola, onAtualizarQuantidade, onRemov
   return (
     <main className='sacola'>
       <Titulo>Minha sacola</Titulo>
-      <Subtitulo cor='#dceaf1'>Revise seus livros antes de finalizar.</Subtitulo>
+      <Subtitulo>Revise seus livros antes de finalizar.</Subtitulo>
 
       <div className='sacola-layout'>
         <section className='sacola-itens' aria-label='Itens da sacola'>
@@ -73,7 +68,7 @@ function Sacola({ itensSacola, onAdicionarSacola, onAtualizarQuantidade, onRemov
             type='button'
             className='finalizar-compra'
             disabled={!itensSacola.length}
-            onClick={finalizarCompra}
+            onClick={onFinalizarCompra}
           >
             Finalizar compra
           </button>

@@ -15,7 +15,14 @@ function Estante({ livrosComprados }) {
       <Subtitulo>Livros comprados para continuar sua leitura.</Subtitulo>
       <p className='estante-contagem'>{quantidadeTotal} livros comprados</p>
       <div className='estante-livros'>
-        <ListaLivros livros={livrosComprados} modo='venda' mostrarQuantidade linkCapa mostrarFavorito={false} mostrarSacola={false} />
+        <ListaLivros
+          livros={livrosComprados}
+          modo='venda'
+          mostrarQuantidade
+          linkCapa
+          mostrarFavorito={false}
+          mostrarSacola={false}
+        />
       </div>
     </main>
   );
