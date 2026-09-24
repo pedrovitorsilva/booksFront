@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Titulo from '../../componentes/Titulo';
 import Subtitulo from '../../componentes/Subtitulo';
+import Input from '../../componentes/Input';
 import './estilo.css';
 
 const valoresIniciais = {
@@ -39,7 +40,8 @@ function Cadastro() {
       <form className='formulario-cadastro' onSubmit={cadastrarUsuario}>
         <div className='campo-formulario'>
           <label htmlFor='nome'>Nome completo</label>
-          <input
+          <Input
+            placeholder=''
             id='nome'
             name='nome'
             type='text'
@@ -51,7 +53,8 @@ function Cadastro() {
         </div>
         <div className='campo-formulario'>
           <label htmlFor='email'>E-mail</label>
-          <input
+          <Input
+            placeholder=''
             id='email'
             name='email'
             type='email'
@@ -64,7 +67,8 @@ function Cadastro() {
         <div className='campos-senha'>
           <div className='campo-formulario'>
             <label htmlFor='senha'>Senha</label>
-            <input
+            <Input
+              placeholder=''
               id='senha'
               name='senha'
               type='password'
@@ -77,7 +81,8 @@ function Cadastro() {
           </div>
           <div className='campo-formulario'>
             <label htmlFor='confirmarSenha'>Confirmar senha</label>
-            <input
+            <Input
+              placeholder=''
               id='confirmarSenha'
               name='confirmarSenha'
               type='password'
