@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom';
 import { catalogoLivros } from '../../dados/catalogoLivros';
-import Titulo from '../Titulo';
-import Subtitulo from '../Subtitulo';
+import Titulo from '../../componentes/Titulo';
+import Subtitulo from '../../componentes/Subtitulo';
+import { useLivrosComprados, useSacola } from '../../hooks/useLoja';
 import './estilo.css';
 
 function converterPreco(preco) {
@@ -12,7 +13,37 @@ function formatarPreco(valor) {
   return valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 }
 
-function Sacola({ itensSacola, onAdicionarSacola, onAtualizarQuantidade, onRemoverDaSacola, onFinalizarCompra }) {
+function Sacola() {
+  const [itensSacola, onAdicionarSacola, setItensSacola] = useSacola();
+  const [, setLivrosComprados] = useLivrosComprados();
+
+  function onAtualizarQuantidade(id, quantidade) {
+    setItensSacola((atuais) => atuais.map((item) => (
+      item.id === id ? { ...item, quantidade: Math.max(1, quantidade) } : item
+    )));
+  }
+
+  function onRemoverDaSacola(id) {
+    setItensSacola((atuais) => atuais.filter((item) => item.id !== id));
+  }
+
+  function onFinalizarCompra() {
+    setLivrosComprados((atuais) => (
+      itensSacola.reduce((lista, item) => {
+        if (lista.some((livro) => livro.id === item.id)) {
+          return lista.map((livro) => (
+            livro.id === item.id
+              ? { ...livro, quantidade: (livro.quantidade || 0) + item.quantidade }
+              : livro
+          ));
+        }
+
+        return [...lista, { ...item, quantidade: item.quantidade || 1 }];
+      }, atuais)
+    ));
+    setItensSacola([]);
+  }
+
   const subtotal = itensSacola.reduce(
     (total, item) => total + converterPreco(item.preco) * item.quantidade,
     0

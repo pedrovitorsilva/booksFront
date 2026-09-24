@@ -1,9 +1,11 @@
-import ListaLivros from '../ListaLivros';
-import Titulo from '../Titulo';
-import Subtitulo from '../Subtitulo';
+import ListaLivros from '../../componentes/ListaLivros';
+import Titulo from '../../componentes/Titulo';
+import Subtitulo from '../../componentes/Subtitulo';
+import { useLivrosComprados } from '../../hooks/useLoja';
 import './estilo.css';
 
-function Estante({ livrosComprados }) {
+function Estante() {
+  const [livrosComprados] = useLivrosComprados();
   const quantidadeTotal = livrosComprados.reduce(
     (total, livro) => total + (livro.quantidade || 1),
     0

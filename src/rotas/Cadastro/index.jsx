@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import Titulo from '../Titulo';
-import Subtitulo from '../Subtitulo';
+import Titulo from '../../componentes/Titulo';
+import Subtitulo from '../../componentes/Subtitulo';
 import './estilo.css';
 
 const valoresIniciais = {

@@ -1,24 +1,30 @@
 import { useState } from 'react';
-import ListaLivros from '../ListaLivros';
-import Titulo from '../Titulo';
-import Subtitulo from '../Subtitulo';
+import ListaLivros from '../../componentes/ListaLivros';
+import Titulo from '../../componentes/Titulo';
+import Subtitulo from '../../componentes/Subtitulo';
+import { catalogoLivros } from '../../dados/catalogoLivros';
+import { useFavoritos, useSacola } from '../../hooks/useLoja';
 import './estilo.css';
+
+const categorias = [
+  { id: 1, nome: 'Front-end' },
+  { id: 2, nome: 'Back-end' },
+  { id: 3, nome: 'Dados e IA' },
+  { id: 4, nome: 'UX/UI' },
+  { id: 5, nome: 'Arquitetura' },
+];
 
 function embaralharLivros(livros) {
   return [...livros].sort(() => Math.random() - 0.5);
 }
 
 function Categoria({
-  categorias,
-  livros,
-  favoritos,
-  itensSacola,
-  onAlternarFavorito,
-  onAdicionarSacola,
   titulo = 'Explore por categoria',
   subtitulo = 'Encontre livros organizados por assunto.',
 }) {
-  const [livrosEmbaralhados] = useState(() => embaralharLivros(livros));
+  const [favoritos, alternarFavorito] = useFavoritos();
+  const [itensSacola, alternarSacola] = useSacola();
+  const [livrosEmbaralhados] = useState(() => embaralharLivros(catalogoLivros));
 
   return (
     <main className='pagina pagina-categorias'>
@@ -41,8 +47,8 @@ function Categoria({
                 modo='categoria'
                 favoritos={favoritos}
                 itensSacola={itensSacola}
-                onAlternarFavorito={onAlternarFavorito}
-                onAdicionarSacola={onAdicionarSacola}
+                onAlternarFavorito={alternarFavorito}
+                onAdicionarSacola={alternarSacola}
               />
             </section>
           );

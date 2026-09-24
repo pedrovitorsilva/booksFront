@@ -1,5 +1,6 @@
-import Titulo from '../Titulo';
-import Subtitulo from '../Subtitulo';
+import Titulo from '../../componentes/Titulo';
+import Subtitulo from '../../componentes/Subtitulo';
+import { useFavoritos } from '../../hooks/useLoja';
 import './estilo.css';
 
 function Perfil({
@@ -8,8 +9,8 @@ function Perfil({
     email: 'Não informado',
     status: 'Perfil em configuração',
   },
-  quantidadeFavoritos = 0,
 }) {
+  const [favoritos] = useFavoritos();
   return (
     <main className='pagina pagina-perfil'>
       <Titulo>Perfil</Titulo>
@@ -39,7 +40,7 @@ function Perfil({
           </div>
           <div>
             <dt>Favoritos</dt>
-            <dd>{quantidadeFavoritos} livros</dd>
+            <dd>{favoritos.length} livros</dd>
           </div>
         </dl>
       </section>

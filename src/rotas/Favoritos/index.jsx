@@ -1,11 +1,14 @@
 import { useState } from 'react';
-import Titulo from '../Titulo';
-import Subtitulo from '../Subtitulo';
-import Pesquisar from '../Pesquisar';
-import ListaLivros from '../ListaLivros';
+import Titulo from '../../componentes/Titulo';
+import Subtitulo from '../../componentes/Subtitulo';
+import Pesquisar from '../../componentes/Pesquisar';
+import ListaLivros from '../../componentes/ListaLivros';
+import { useFavoritos, useSacola } from '../../hooks/useLoja';
 import './estilo.css';
 
-function Favoritos({ favoritos, itensSacola, onAlternarFavorito, onAdicionarSacola }) {
+function Favoritos() {
+  const [favoritos, onAlternarFavorito] = useFavoritos();
+  const [itensSacola, onAdicionarSacola] = useSacola();
   const [resultadosBusca, setResultadosBusca] = useState(null);
   const [buscaKey, setBuscaKey] = useState(0);
   const livrosExibidos = resultadosBusca ?? favoritos;

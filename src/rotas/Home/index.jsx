@@ -2,9 +2,17 @@ import Pesquisar from '../../componentes/Pesquisar';
 import UltimasAtualizacoes from '../../componentes/UltimasAtualizacoes';
 import CardRecomenda from '../../componentes/CardRecomenda';
 import { catalogoLivros } from '../../dados/catalogoLivros';
+import { useFavoritos, useSacola } from '../../hooks/useLoja';
 
-function Home({ favoritos, itensSacola, onAlternarFavorito, onAdicionarSacola }) {
-  const propsLivros = { favoritos, itensSacola, onAlternarFavorito, onAdicionarSacola };
+function Home() {
+  const [favoritos, alternarFavorito] = useFavoritos();
+  const [itensSacola, alternarSacola] = useSacola();
+  const propsLivros = {
+    favoritos,
+    itensSacola,
+    onAlternarFavorito: alternarFavorito,
+    onAdicionarSacola: alternarSacola,
+  };
 
   return (
     <>
